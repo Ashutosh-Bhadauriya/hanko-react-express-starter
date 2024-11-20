@@ -8,13 +8,14 @@ export default function HankoAuth() {
   const navigate = useNavigate();
   const hanko = useMemo(() => new Hanko(hankoApi), []);
 
+
   const redirectAfterLogin = useCallback(() => {
     navigate("/dashboard");
   }, [navigate]);
 
   useEffect(
     () =>
-      hanko.onAuthFlowCompleted(() => {
+      hanko.onSessionCreated(() => {
         redirectAfterLogin();
       }),
     [hanko, redirectAfterLogin]
@@ -22,7 +23,7 @@ export default function HankoAuth() {
 
   useEffect(() => {
     register(hankoApi).catch((error) => {
-      console.log(error)
+      // handle error
     });
   }, []);
 
